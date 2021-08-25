@@ -33,7 +33,7 @@ let todoList = [
     priority:'1'
     },
     {
-        id:"1",
+        id:"2",
         taskName:"learn node.js",
         description:"pay attention in th class",
         status:false,
@@ -50,6 +50,49 @@ let todoList = [
         message: 'Added successfully',
         status: true,
       });
+    },
+    update: (req, res) => {
+      console.log('Hello from todo update controller');
+      const { body } = req;
+      const { id } = req.params;
+      // for(let i=0; i<todoList.length; i++)
+      // {
+      //   if(todoList[i].id === id){
+      //     todoList[i]={...todoList[i], ...body};
+      //   }
+      // }
+      todoList.forEach((element,index) => {
+        if(element.id===id)
+        todoList[index] = {...element, ...body};
+      }),
+      res.send({
+        message: 'update  successfully',
+        status: true, 
+        todoList,
+      });
+    },
+    delete:(req, res)=>{
+      console.log('Hello from todo delete controller');
+      const { body } = req;
+      const { id } = req.params;
+      // for(let i=0; i<todoList.length; i++){
+      //   if(todoList[i].id === id){
+      //     todoList.splice(i, 1);
+      //    console.log ('todolist',todoList[i]);
+      //   }
+      // }
+      todoList.forEach((element,index) => {
+        if(element.id===id){
+          todoList.splice(index, 1);
+          console.log ('todolist',todoList[index]);
+        }
+      }),
+      res.send({
+        message: 'detete  successfully',
+        status: true, 
+        todoList,
+      });   
+
     },
     fetchList: (req, res) => {
       res.send(todoList);
