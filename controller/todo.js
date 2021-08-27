@@ -94,6 +94,19 @@ let todoList = [
       });   
 
     },
+    fetchTask:(req, res)=>{
+      console.log('todo fetchtask controller');
+      const { id } = req.params;
+      todoList.forEach((element)=>{
+        if(element.id==id){
+          res.send({
+            status:true,
+            data:element,
+          })
+        }
+
+      })
+    },
     fetchList: (req, res) => {
       res.send(todoList);
     }
