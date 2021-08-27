@@ -28,7 +28,7 @@ let todoList = [
     id:"1",
     taskName:"learn node.js",
     description:"pay attention in th class",
-    status:false,
+    completedstatus:false,
     deadline:'30/08/2021',
     priority:'1'
     },
@@ -36,7 +36,7 @@ let todoList = [
         id:"2",
         taskName:"learn node.js",
         description:"pay attention in th class",
-        status:false,
+        completedstatus:false,
         deadline:'30/08/2021',
         priority:'2'
         },
@@ -97,18 +97,36 @@ let todoList = [
     fetchTask:(req, res)=>{
       console.log('todo fetchtask controller');
       const { id } = req.params;
+      let matchedElement ={};
       todoList.forEach((element)=>{
         if(element.id==id){
+          matchedElement=element;
+        }
+      });
           res.send({
             status:true,
-            data:element,
-          })
-        }
-
-      })
+            data:matchedElement,
+      });
     },
-    fetchList: (req, res) => {
+ 
+    changeStatus:(req, res) => {
+      const { body } = req;
+      const { id } = req.params;
+      for(let i=0; i<todoList.length;i++)
+      {
+        if(todoList[i].id == id){
+          todoList[i].completedstatus=body.completedstatus;
+        }
+      }
+      res.send({
+        message:'Marked the status successfully',
+        status:true,
+        todoList,
+      });
+    },
+    
+   fetchList: (req, res) => {
       res.send(todoList);
-    }
+    } 
   }
   module.exports = todoController;
