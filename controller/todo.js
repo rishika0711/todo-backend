@@ -45,6 +45,28 @@ let todoList = [
     create: (req, res) => {
       console.log('Hello from todo controller');
       const { body } = req;
+      let isMatched=false;
+      todoList.forEach(element =>{
+        if(element.id==body.id){
+         isMatched = true;
+        }
+      });
+
+      // const randomUniqueId = Math.floor(Math.random() * 1000000)
+      // const newTask ={
+      //   id:randomUniqueId,
+      //   ...body,
+      // };
+      // todoList.push(newTask);
+
+
+      
+      if(isMatched){
+      return res.send({
+        message: 'id alredy exist',
+        status: false,
+      });
+    }
       todoList.push(body);
       res.send({
         message: 'Added successfully',
@@ -79,7 +101,7 @@ let todoList = [
       //   if(todoList[i].id === id){
       //     todoList.splice(i, 1);
       //    console.log ('todolist',todoList[i]);
-      //   }
+      //   }  
       // }
       todoList.forEach((element,index) => {
         if(element.id===id){
