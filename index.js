@@ -1,52 +1,47 @@
 // const express = require('express');
 // const app = express();
-// const todoRoute = require('./routes/todo');
+// // const todoRoute = require('./routes/todo');
+// const userRoute = require('./routes/user');
 // const bodyParser = require('body-parser');
-// // app.get('/name',(req , res) => {
-// //     res.send({
-// //         name:'rihika',
-// //         class:'tets',
-// //     });
-// // });
+// const connectDb = require('./config/db');
 
-// // app.put('/',(req , res) => {
-// //     res.send(" put hello");
-// // });
+// // parsing the application/json
 // app.use(bodyParser.json());
-// //parsing the application json request type
-// //app.use(express.json());
 
-// const middleware = (req,res,next)=>{
-//     console.log('Logging the value');
-//     next(); 
+// // Connect database
+// connectDb();
+
+
+
+// //middleware 
+// const logger = (req, res, next) => {
+//   console.log('Logging the values');
+//   req.name = 'Navneet';
+//   next();
 // }
-// app.use(middleware);//one to declare or call middleware
-// //app.use('/api/',middleware,route);//second to declare or call middleware
-
-
-// app.use('/api/todo/',todoRoute);
-// app.use('/static/',express.static('public'));
-// app.use('/images/',express.static('public/images'));
-
-
-// //app.use('/',route);
-
-// // this *  is use to print the msg when user try to call api which not deine in sytem
-// // app.get('*',(req,res)=>
-// // {
-// //     console.log('Sorry this url doessnt exit');
-// //     res.send('Sorry this url this not exit');
-// // })
+// app.use(logger);
+// // app.use('/api/todo/', todoRoute);
+// app.use('/api/user/', userRoute);
+// app.use('/static/', express.static('public'));
+// app.use('/images/', express.static('public/images'));
+// app.get('*', (req, res) => {
+//   res.status(400);
+//   console.log(`Sorry this url does not exist`);
+//   res.send('Sorry this url does not exist');
+// })
 // app.listen(9000, () => {
-//     console.log("sever is listening to port 9000")
+//   console.log('Server is listening to port 9000')
 // });
-
 const express = require('express');
 const app = express();
 const todoRoute = require('./routes/todo');
+const userRoute = require('./routes/user');
 const bodyParser = require('body-parser');
+const connectDb = require('./config/db');
 // parsing the application/json
 app.use(bodyParser.json());
+//Connect Database
+connectDb();
 //middleware 
 const logger = (req, res, next) => {
   console.log('Logging the values');
@@ -55,6 +50,7 @@ const logger = (req, res, next) => {
 }
 app.use(logger);
 app.use('/api/todo/', todoRoute);
+app.use('/api/user/', userRoute);
 app.use('/static/', express.static('public'));
 app.use('/images/', express.static('public/images'));
 app.get('*', (req, res) => {
@@ -65,3 +61,5 @@ app.get('*', (req, res) => {
 app.listen(9000, () => {
   console.log('Server is listening to port 9000')
 });
+
+
