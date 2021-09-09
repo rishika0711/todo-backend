@@ -1,4 +1,5 @@
 const mongoose =require('mongoose');
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
     firstname:{
@@ -26,7 +27,22 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true,
-      }
+      },
+      followers:[
+        {
+          userId:{
+            type: Schema.Types.ObjectId,
+            ref:'users'
+          },
+          dateTime:{
+            type:Date,
+            require:true
+          },
+          name:{
+            type:String
+          }
+        }
+      ]
 })
 
 module.exports = User = mongoose.model('user',UserSchema);

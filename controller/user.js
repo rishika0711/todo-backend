@@ -1,34 +1,6 @@
 //const { Model, model } = require("mongoose");
 const User = require("../models/User");
 const bcrypt = require('bcryptjs');
-
-// const userController = {
-//     create: async (req, res) => {
-//       try{
-
-//       const { body } = req;
-//       const firstname = "testing";
-//       const randomUniqueId = Math.floor(Math.random() = 1000000);
-     
-
-//       const user = new User({
-//         firstname:"nav"
-//       })
-
-//       await user.save();
-//         }
-//         catch(err){
-          
-//         }
-//       },
-//       }
-
-// module.exports = userController; 
-
-
-// const User = require('../models/User');
-// const bcrypt = require('bcryptjs');
-
 const userController = {
   create: async (req, res) => {
     try{
@@ -113,6 +85,42 @@ const userController = {
       });
     }
     
+  },
+  follow: async(req, res) => {
+    try{
+      const {userId, followUserId } = req.body;
+      const existingUser = await User.findById(userId);
+      if(existingUser){
+        const followUser = await User.findById(followUserId);
+        if(followUser){
+          const followObject = {
+            userId: existingUser._id,
+            name: existingUser.firstname,
+            dateTime:"10/20/2019"
+          }
+          followUser.followers.unshift(followObject);
+          await followUser.save();
+
+          return res.status(200).send({
+            message: 'followed successfully',
+            status:true
+          });
+        }
+      }
+
+      return res.status(200).send({
+          message: 'wrong ids',
+          status:false
+      });
+    }catch(e){
+      console.log(e);
+      return res.status(400).send({
+        message: 'something went wrong!!',
+        status:false,
+        error:e
+    });
+
+    }
   }
 }
 
@@ -133,3 +141,24 @@ module.exports = userController;
 // Model.findOneAndDelete()
 // Model.findOneAndUpdate()
 // Model.findOneAndReplace()
+
+// Authentication & Authorization
+
+// Authentication
+// 1. Users are having correct credentials. 
+// 2. Then we will say that this user is authenticated (validated)
+
+//  Authorization
+// 1. control the access to multiple internal sub-sytems.
+// 2. example 
+// - students can't see the salary of teachers.
+// - teachers can' see the other teachers salary.
+// - Only admin should have rights to view the salary for teachers.
+
+// Token
+// Jwt (json web tokens) token 
+
+// Create the jwt token  with some additional values.
+// send it to the frontend 
+// then frontend will send that in headers for all the apicalls being made.
+//
