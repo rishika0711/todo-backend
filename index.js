@@ -49,7 +49,7 @@ const logger = (req, res, next) => {
   next();
 }
 app.use(logger);
-//app.use('/api/todo/', todoRoute);
+app.use('/api/todo/', todoRoute);
 app.use('/api/user/', userRoute);
 app.use('/static/', express.static('public'));
 app.use('/images/', express.static('public/images'));

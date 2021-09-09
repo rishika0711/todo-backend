@@ -1,30 +1,30 @@
-// const mongoose =require('mongoose');
+const mongoose =require('mongoose');
 
-// const TodoSchema = new mongoose.Schema({
+const TodoSchema = new mongoose.Schema({
     
-//   task: {
+  task: {
 
-//     type: String,
+    type: String,
 
-//     required: true,
+    required: true,
 
-//   },
+  },
 
-//   description: {
+  description: {
 
-//     type: String,
+    type: String,
 
-//     required: true,
+    required: true,
 
-//   },
+  },
 
-//   completed: {
+  completed: {
 
-//     type: Boolean,
+    type: Boolean,
 
-//     default: false,
+    default: false,
 
-//   }
-// })
+  }
+})
 
-// module.exports = Todo = mongoose.model('todo',TodoSchema);
+module.exports = Todo = mongoose.model('todo',TodoSchema);
