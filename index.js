@@ -34,10 +34,11 @@
 // });
 const express = require('express');
 const app = express();
-const todoRoute = require('./routes/todo');
+//const todoRoute = require('./routes/todo');
 const userRoute = require('./routes/user');
 const bodyParser = require('body-parser');
 const connectDb = require('./config/db');
+const auth = require('./middleware/auth');
 // parsing the application/json
 app.use(bodyParser.json());
 //Connect Database
@@ -49,8 +50,9 @@ const logger = (req, res, next) => {
   next();
 }
 app.use(logger);
-app.use('/api/todo/', todoRoute);
-app.use('/api/user/', userRoute);
+//app.use('/api/todo/', todoRoute);
+app.use('/api/user/',  userRoute);
+// app.use('/api/user/', userRoute);/
 app.use('/static/', express.static('public'));
 app.use('/images/', express.static('public/images'));
 app.get('*', (req, res) => {

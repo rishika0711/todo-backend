@@ -1,6 +1,10 @@
 //const { Model, model } = require("mongoose");
 const User = require("../models/User");
 const bcrypt = require('bcryptjs');
+const mongoose =require('mongoose');
+const jwt = require('jsonwebtoken');
+const config=require('config');
+
 const userController = {
   create: async (req, res) => {
     try{
@@ -66,9 +70,20 @@ const userController = {
       if(existingUser){
         const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
         if(isPasswordMatch){
+          const payload = {
+            user:{
+              id:existingUser.id,
+              firstname:existingUser.firstname
+            }
+          };
+          const jwtToken = await jwt.sign(payload,
+            config.get('jwtSecret'),
+            {expiresIn:360000});
+          
           return res.status(200).send({
             message: 'Login Successful',
-            status: true
+            status: true,
+            token:jwtToken
           });
         }
       } 
@@ -162,3 +177,5 @@ module.exports = userController;
 // send it to the frontend 
 // then frontend will send that in headers for all the apicalls being made.
 //
+
+//middleware

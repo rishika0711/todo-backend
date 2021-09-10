@@ -1,3 +1,4 @@
 {
-    "mongodbURI":"mongodb+srv://Rish0711:admin123@cluster0.rfx3w.mongodb.net/Todo?retryWrites=true&w=majority"
+    "mongodbURI":"mongodb+srv://Rish0711:admin123@cluster0.rfx3w.mongodb.net/Todo?retryWrites=true&w=majority",
+    "jwtSecret":"mytestingSecretToken"
 }
