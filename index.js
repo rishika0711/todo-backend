@@ -34,8 +34,8 @@
 // });
 const express = require('express');
 const app = express();
-//const todoRoute = require('./routes/todo');
-const userRoute = require('./routes/user');
+const todoRoute = require('./routes/todo');
+//const userRoute = require('./routes/user');
 const bodyParser = require('body-parser');
 const connectDb = require('./config/db');
 const auth = require('./middleware/auth');
@@ -50,8 +50,8 @@ const logger = (req, res, next) => {
   next();
 }
 app.use(logger);
-//app.use('/api/todo/', todoRoute);
-app.use('/api/user/',  userRoute);
+app.use('/api/todo/', todoRoute);
+//app.use('/api/user/',  userRoute);
 // app.use('/api/user/', userRoute);/
 app.use('/static/', express.static('public'));
 app.use('/images/', express.static('public/images'));
@@ -60,7 +60,7 @@ app.get('*', (req, res) => {
   console.log(`Sorry this url does not exist`);
   res.send('Sorry this url does not exist');
 })
-app.listen(9000, () => {
+app.listen(process.env.PORT || 9000, () => {
   console.log('Server is listening to port 9000')
 });
 

@@ -140,7 +140,7 @@ const todoController = {
   create: async(req, res) =>{
     try{
       const { task, description, completed } = req.body;
-      let existingtask = await User.findOne({ task });
+      let existingtask = await todo.findOne({ task });
       console.log('exisiting task', existingtask);
 
       if(existingtask){
@@ -167,8 +167,37 @@ const todoController = {
       })
 
   }
-}
+},
+  delete: async(req, res)=> {
+    try{
+      const { task, description, completed } = req.body;
+      let existingtask =await todo.deleteOne({task});
+      console.log('exisiting task', existingtask);
 
+      if(existingtask){
+        res.status(400).send({
+          message: "task in process",
+          status: false
+        })
+      } 
+      const todo = new Todo({
+        task,
+        description,
+      })
+      const newTask = await todo.save();
+      res.status(200).send({
+        message: "task deletd successfully",
+        status: true,
+        newTask,
+      })
+    }catch(err){
+      console.log("error", err);
+      res.status(400).send({
+        message: "task not delted",
+        status: false
+      })
+
+  }
 }
 
 module.exports = todoController;
